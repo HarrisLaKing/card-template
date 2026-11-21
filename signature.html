@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>Email signature</title>
+<!-- You don't need to edit this file. Your information lives in info.js. -->
+<script src="info.js"></script></head>
+<body style="font-family:Arial,sans-serif;color:#1C1C1C;background:#F7F4EF;margin:0;padding:24px;font-size:16px">
+<p style="max-width:600px;line-height:1.5"><b>To use:</b> on a computer, drag to select everything inside the white box
+(start just left of the photo, end just right of the QR code), copy, then paste it into your email signature settings.
+If you change info.js later, come back and paste it again: a pasted signature is a copy.</p>
+<div id="box" style="background:#FFFFFF;padding:20px;display:inline-block;border:1px solid #C9C2B6"></div>
+<script>
+function esc(s){return String(s).replace(/[&<>"]/g,function(m){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m];});}
+var c=CARD, home=new URL("./",location.href).href;
+var A='color:#1F4E79;text-decoration:none;font-weight:bold';
+var T='font-family:Arial,sans-serif;font-size:16px;color:#1C1C1C';
+var rows='<tr><td style="font-family:Arial,sans-serif;font-size:22px;font-weight:bold;color:#1C1C1C;padding:0 0 2px">'+esc(c.name)+'</td></tr>'
+ +'<tr><td style="font-family:Arial,sans-serif;font-size:16px;font-weight:bold;color:#1F4E79;padding:0 0 8px">'+esc(c.title)+'</td></tr>';
+(c.groups||[]).forEach(function(x){rows+='<tr><td style="padding:1px 0;'+T+'">'
+ +(x.link?'<a href="'+esc(x.link)+'" style="'+A+'">'+esc(x.name)+'</a>':'<b>'+esc(x.name)+'</b>')
+ +(x.line?' &middot; '+esc(x.line):'')+'</td></tr>';});
+rows+='<tr><td style="'+T+';padding:8px 0 0">Call or text <a href="tel:+'+esc(c.phoneDigits)+'" style="'+A+'">'+esc(c.phone)+'</a></td></tr>';
+if(c.email) rows+='<tr><td style="'+T+';padding:2px 0 0"><a href="mailto:'+esc(c.email)+'" style="'+A+'">'+esc(c.email)+'</a></td></tr>';
+rows+='<tr><td style="padding:10px 0 0"><a href="'+home+'contact.vcf" style="display:inline-block;background:#1F4E79;color:#FFFFFF;text-decoration:none;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;padding:7px 14px;border-radius:4px">Save my contact</a></td></tr>';
+document.getElementById("box").innerHTML=
+ '<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,sans-serif;color:#1C1C1C;max-width:840px"><tr>'
+ +'<td valign="top" style="padding:0 14px 0 0"><a href="'+home+'"><img src="'+home+'photo.jpg" width="96" height="96" alt="'+esc(c.name)+'" style="display:block;border-radius:48px;border:2px solid #1F4E79"></a></td>'
+ +'<td valign="top" style="padding:0 14px 0 0;border-right:1px solid #C9C2B6"><table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse">'+rows+'</table></td>'
+ +'<td valign="top" align="center" style="padding:0 0 0 14px"><a href="'+home+'"><img src="'+home+'qr.png" width="120" height="120" alt="QR code to my digital card" style="display:block"></a>'
+ +'<div style="font-family:Arial,sans-serif;font-size:16px;color:#4A4A4A;padding-top:4px">Scan or tap</div></td>'
+ +'</tr></table>';
+</script>
+</body></html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital card</title>
+<!-- You don't need to edit this file. Your information lives in info.js. -->
+<style>
+:root{--ink:#1C1C1C;--muted:#4A4A4A;--paper:#F7F4EF;--card:#FFFFFF;--accent:#1F4E79;--line:#E2DDD3}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:17px}
+body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:30rem;margin:0 auto;padding:1.5rem 1rem 3rem}
+.top{text-align:center}
+.top img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--card);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+h1{font-size:1.75rem;line-height:1.2;margin:.75rem 0 .25rem}
+.sub{margin:0 0 .5rem;color:var(--muted)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1.25rem 0 .6rem}
+a.btn{display:flex;align-items:center;justify-content:center;min-height:48px;padding:.6rem .8rem;border-radius:12px;text-decoration:none;font-weight:600;border:2px solid var(--accent);color:var(--accent);background:var(--card)}
+a.btn.main,a.btn.wide{grid-column:1/-1}
+a.btn.main{background:var(--accent);color:#fff}
+a.btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.phone{text-align:center;margin:.25rem 0 1.5rem;font-weight:600}
+.phone a{color:var(--ink)}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;margin:0 0 .9rem}
+h2{font-size:1.25rem;line-height:1.25;margin:0 0 .35rem}
+.line{margin:0 0 .5rem}
+section a.go{font-weight:600;color:var(--accent)}
+footer{text-align:center;color:var(--muted);margin-top:1.5rem}
+</style>
+<script src="info.js"></script></head>
+<body><main>
+<div class="top"><img id="photo" src="photo.jpg" alt="" width="120" height="120">
+<h1 id="name"></h1><p class="sub" id="title"></p></div>
+<div class="actions" id="actions"></div>
+<p class="phone" id="phone"></p>
+<div id="groups"></div>
+<footer id="foot"></footer>
+<script>
+function el(tag, attrs, text){var e=document.createElement(tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text)e.textContent=text;return e;}
+var c=CARD;
+document.title=c.name;
+document.getElementById("photo").alt=c.name;
+document.getElementById("name").textContent=c.name;
+document.getElementById("title").textContent=c.title;
+var a=document.getElementById("actions");
+if(c.signupLink) a.appendChild(el("a",{"class":"btn main",href:c.signupLink},"Leave your info"));
+a.appendChild(el("a",{"class":"btn wide",href:"contact.vcf",download:"contact.vcf"},"Save contact"));
+a.appendChild(el("a",{"class":"btn",href:"tel:+"+c.phoneDigits},"Call"));
+a.appendChild(el("a",{"class":"btn",href:"sms:+"+c.phoneDigits},"Text"));
+if(c.email) a.appendChild(el("a",{"class":"btn wide",href:"mailto:"+c.email},"Email me"));
+var p=document.getElementById("phone");
+p.appendChild(el("a",{href:"tel:+"+c.phoneDigits},c.phone));
+if(c.city) p.appendChild(document.createTextNode(" · "+c.city));
+var g=document.getElementById("groups");
+(c.groups||[]).forEach(function(x){var s=el("section",{});s.appendChild(el("h2",{},x.name));
+ if(x.line)s.appendChild(el("p",{"class":"line"},x.line));
+ if(x.link)s.appendChild(el("a",{"class":"go",href:x.link},"Learn more about "+x.name+" →"));g.appendChild(s);});
+document.getElementById("foot").textContent=c.name+" · "+c.phone;
+</script>
+</main></body></html>
